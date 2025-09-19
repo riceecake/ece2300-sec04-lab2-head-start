@@ -5,7 +5,7 @@
 `ifndef ADDER_RIPPLE_CARRY_4B_GL_V
 `define ADDER_RIPPLE_CARRY_4B_GL_V
 
-`include "FullAdder_GL.v"
+`include "lab2/FullAdder_GL.v"
 
 module AdderRippleCarry_4b_GL
 (
@@ -19,6 +19,12 @@ module AdderRippleCarry_4b_GL
   //''' LAB ASSIGNMENT '''''''''''''''''''''''''''''''''''''''''''''''''''
   // Implement 4-bit ripple carry adder using FullAdder_GL module
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+  `ECE2300_UNUSED( in0 );
+  `ECE2300_UNUSED( in1 );
+  `ECE2300_UNUSED( cin );
+  `ECE2300_UNDRIVEN( cout );
+  `ECE2300_UNDRIVEN( sum );
 
 endmodule
 

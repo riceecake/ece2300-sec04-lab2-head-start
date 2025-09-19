@@ -15,8 +15,14 @@ module FullAdder_GL
 );
 
   //''' ACTIVITY '''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-  // Implement full adder w/ explicit gate-level modeling or Boolean eq
+  // Implement full adder w/ explicit gate-level modeling
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+  `ECE2300_UNUSED( in0 );
+  `ECE2300_UNUSED( in1 );
+  `ECE2300_UNUSED( cin );
+  `ECE2300_UNDRIVEN( cout );
+  `ECE2300_UNDRIVEN( sum );
 
 endmodule
 

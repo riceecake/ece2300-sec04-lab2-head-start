@@ -2,8 +2,10 @@
 // FullAdder_GL-test
 //========================================================================
 
-`include "ece2300-test.v"
-`include "FullAdder_GL.v"
+`include "ece2300/ece2300-test.v"
+
+// ece2300-lint
+`include "lab2/FullAdder_GL.v"
 
 module Top();
 
@@ -11,63 +13,54 @@ module Top();
   // Setup
   //----------------------------------------------------------------------
 
-  // verilator lint_off UNUSED
-  logic clk;
-  logic reset;
-  // verilator lint_on UNUSED
-
-  ece2300_TestUtils t( .* );
+  CombinationalTestUtils t();
 
   //----------------------------------------------------------------------
   // Instantiate design under test
   //----------------------------------------------------------------------
 
-  logic dut_in0;
-  logic dut_in1;
-  logic dut_cin;
-  logic dut_cout;
-  logic dut_sum;
+  logic in0;
+  logic in1;
+  logic cin;
+  logic cout;
+  logic sum;
 
   FullAdder_GL dut
   (
-    .in0  (dut_in0),
-    .in1  (dut_in1),
-    .cin  (dut_cin),
-    .cout (dut_cout),
-    .sum  (dut_sum)
+    .in0  (in0),
+    .in1  (in1),
+    .cin  (cin),
+    .cout (cout),
+    .sum  (sum)
   );
 
   //----------------------------------------------------------------------
   // check
   //----------------------------------------------------------------------
-  // All tasks start at #1 after the rising edge of the clock. So we
-  // write the inputs #1 after the rising edge, and check the outputs #1
-  // before the next rising edge.
+  // We set the inputs, wait 8 tau, check the outputs, wait 2 tau. Each
+  // check will take a total of 10 tau.
 
   task check
   (
-    input logic in0,
-    input logic in1,
-    input logic cin,
-    input logic cout,
-    input logic sum
+    input logic in0_,
+    input logic in1_,
+    input logic cin_,
+    input logic cout_,
+    input logic sum_
   );
     if ( !t.failed ) begin
 
-      dut_in0 = in0;
-      dut_in1 = in1;
-      dut_cin = cin;
+      in0 = in0_;
+      in1 = in1_;
+      cin = cin_;
 
       #8;
 
-      if ( t.n != 0 ) begin
-        $display( "%3d: %b + %b + %b > %b %b", t.cycles,
-                dut_in0, dut_in1, dut_cin,
-                dut_cout, dut_sum );
-      end
+      if ( t.n != 0 )
+        $display( "%3d: %b + %b + %b > %b %b", t.cycles, in0, in1, cin, cout, sum );
 
-      `ECE2300_CHECK_EQ( dut_cout, cout );
-      `ECE2300_CHECK_EQ( dut_sum,  sum );
+      `ECE2300_CHECK_EQ( cout, cout_ );
+      `ECE2300_CHECK_EQ( sum,  sum_ );
 
       #2;
 
@@ -81,11 +74,13 @@ module Top();
   task test_case_1_basic();
     t.test_case_begin( "test_case_1_basic" );
 
+    //     in0   in1   cin   cout  sum
     check( 1'b0, 1'b0, 1'b0, 1'b0, 1'b0 );
     check( 1'b1, 1'b0, 1'b0, 1'b0, 1'b1 );
     check( 1'b0, 1'b1, 1'b0, 1'b0, 1'b1 );
     check( 1'b1, 1'b1, 1'b0, 1'b1, 1'b0 );
 
+    t.test_case_end();
   endtask
 
   //----------------------------------------------------------------------
@@ -99,6 +94,20 @@ module Top();
     // Add checks for exhaustive testing (check all possible inputs)
     //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
+    t.test_case_end();
+  endtask
+
+  //------------------------------------------------------------------------
+  // test_case_3_xprop
+  //------------------------------------------------------------------------
+
+  task test_case_3_xprop();
+    t.test_case_begin( "test_case_3_xprop" );
+
+    //     in0   in1   cin   cout  sum
+    check( 1'bx, 1'bx, 1'bx, 1'bx, 1'bx );
+
+    t.test_case_end();
   endtask
 
   //----------------------------------------------------------------------
@@ -110,6 +119,7 @@ module Top();
 
     if ((t.n <= 0) || (t.n == 1)) test_case_1_basic();
     if ((t.n <= 0) || (t.n == 2)) test_case_2_exhaustive();
+    if ((t.n <= 0) || (t.n == 3)) test_case_3_xprop();
 
     t.test_bench_end();
   end
