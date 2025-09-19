@@ -5,6 +5,8 @@
 `ifndef FULL_ADDER_GL_V
 `define FULL_ADDER_GL_V
 
+`include "ece2300/ece2300-misc.v"
+
 module FullAdder_GL
 (
   (* keep=1 *) input  wire in0,

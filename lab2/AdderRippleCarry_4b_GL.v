@@ -5,6 +5,7 @@
 `ifndef ADDER_RIPPLE_CARRY_4B_GL_V
 `define ADDER_RIPPLE_CARRY_4B_GL_V
 
+`include "ece2300/ece2300-misc.v"
 `include "lab2/FullAdder_GL.v"
 
 module AdderRippleCarry_4b_GL
