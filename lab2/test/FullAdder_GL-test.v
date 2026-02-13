@@ -89,10 +89,16 @@ module Top();
 
   task test_case_2_exhaustive();
     t.test_case_begin( "test_case_2_exhaustive" );
-
-    //''' ACTIVITY '''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    // Add checks for exhaustive testing (check all possible inputs)
-    //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+    
+    //     in0   in1   cin   cout  sum
+    check( 1'b0, 1'b0, 1'b0, 1'b0, 1'b0 );
+    check( 1'b0, 1'b0, 1'b1, 1'b0, 1'b1 );
+    check( 1'b0, 1'b1, 1'b0, 1'b0, 1'b1 );
+    check( 1'b0, 1'b1, 1'b1, 1'b1, 1'b0 );
+    check( 1'b1, 1'b0, 1'b0, 1'b0, 1'b1 );
+    check( 1'b1, 1'b0, 1'b1, 1'b1, 1'b0 );
+    check( 1'b1, 1'b1, 1'b0, 1'b1, 1'b0 );
+    check( 1'b1, 1'b1, 1'b1, 1'b1, 1'b1 );
 
     t.test_case_end();
   endtask
