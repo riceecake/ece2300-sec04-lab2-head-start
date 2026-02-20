@@ -88,6 +88,20 @@ module Top();
   // Add directed test cases
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
+  task directed_test_cases();
+    t.test_case_begin( "directed_test_cases" );
+
+    //     in0      in1      cin   cout  sum
+    check( 4'b0000, 4'b0000, 1'b0, 1'b0, 4'b0000 ); // cin = 0, cout = 0
+    check( 4'b0001, 4'b0001, 1'b0, 1'b0, 4'b0010 ); // cin = 0, cout = 0
+    check( 4'b0011, 4'b0011, 1'b0, 1'b0, 4'b0110 ); // cin = 0, cout = 0
+    check( 4'b0000, 4'b0000, 1'b1, 1'b0, 4'b0001 ); // cin = 1, cout = 0
+    check( 4'b0001, 4'b0001, 1'b1, 1'b0, 4'b0010 ); // cin = 1, cout = 0
+    check( 4'b0011, 4'b0011, 1'b1, 1'b0, 4'b0111 ); // cin = 1, cout = 0
+    check( 4'b0000, 4'b0000, 1'b0, 1'b1, 4'b ); // cin = 0, cout = 1
+    check( 4'b0001, 4'b0001, 1'b0, 1'b1, 4'b0010 ); // cin = 0, cout = 1
+    check( 4'b0011, 4'b0011, 1'b0, 1'b1, 4'b0111 ); // cin = 0, cout = 1
+
   //''' ACTIVITY '''''''''''''''''''''''''''''''''''''''''''''''''''''''
   // Add random test case
   //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
